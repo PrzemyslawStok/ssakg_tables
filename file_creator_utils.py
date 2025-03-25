@@ -1,6 +1,7 @@
 import numpy as np
 
-def sequence_to_bin(sequence: np.ndarray, no_symbols=1000) -> str:
+
+def sequence_to_bin(sequence: np.ndarray, no_symbols: int, delimiter=None) -> str:
     max_min_length = round(np.log2(no_symbols))
     binary_representation = ""
     for symbol in sequence:
@@ -8,6 +9,17 @@ def sequence_to_bin(sequence: np.ndarray, no_symbols=1000) -> str:
         binary_representation += bin_symbol
 
     return binary_representation
+
+
+def sequences_to_bin(sequences: np.ndarray, no_symbols: int, delimiter=None) -> list[str]:
+    bin_sequences = []
+    for sequence in sequences:
+        bin_line = sequence_to_bin(sequence, no_symbols, delimiter)
+        if delimiter is not None:
+            bin_line = f"{delimiter}".join(bin_line)
+        bin_sequences.append(bin_line)
+
+    return bin_sequences
 
 
 def binary_string_to_sequence(binary_representation: str, no_symbols=1000) -> list:
