@@ -47,6 +47,29 @@ def crate_files(number_of_symbols: int, sequence_length: int, number_of_sequence
 
 
 if __name__ == "__main__":
-    crate_files(number_of_symbols=1000, sequence_length=15, number_of_sequences=1000, context_list=[3, 4, 5],
+    # Tabela 8
+    crate_files(number_of_symbols=615, sequence_length=15, number_of_sequences=100_000, context_list=[3, 4, 5, 6, 7, 8],
                 unique_elements=True,
-                base_name=f"sequences_{np.random.randint(10000)}")
+                base_name=f"table8_{np.random.randint(10000)}")
+
+    crate_files(number_of_symbols=945, sequence_length=15, number_of_sequences=100_000, context_list=[3, 4, 5, 6, 7, 8],
+                unique_elements=True,
+                base_name=f"table8_{np.random.randint(10000)}")
+
+    crate_files(number_of_symbols=2483, sequence_length=15, number_of_sequences=100_000, context_list=[3, 4, 5, 6, 7, 8],
+                unique_elements=True,
+                base_name=f"table8_{np.random.randint(10000)}")
+
+    # Tabela 2
+    # to jest ten największy plik najątawiej podzielić go na mniejsze w pętli
+    crate_files(number_of_symbols=2000, sequence_length=15, number_of_sequences=13_000,
+                context_list=[6],
+                unique_elements=True,
+                base_name=f"table2_{np.random.randint(10000)}")
+
+    # Tabela 3
+
+    crate_files(number_of_symbols=615, sequence_length=15, number_of_sequences=1000,
+                context_list=[6],
+                unique_elements=True,
+                base_name=f"table3_{np.random.randint(10000)}")
