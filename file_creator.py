@@ -2,7 +2,7 @@ import numpy as np
 
 from ssakg import SequenceGenerator, SSAKG
 
-from file_creator_utils import binary_string_to_sequence, sequences_to_bin
+from file_creator_utils import binary_string_to_sequence, sequences_to_bin, context_from_sequence_zeros_filed
 
 
 def decode_file(filename: str):
@@ -25,6 +25,7 @@ def crate_files(number_of_symbols: int, sequence_length: int, number_of_sequence
 
     # unique elements oznacza, że sekwencje nie zawierają powtarzających się elementów
     sequences = sequence_generator.generate_unique_sequences(number_of_sequences, unique_elements=unique_elements)
+    sequences += 1
 
     np.savetxt(file_name + ".txt", sequences, fmt="%d")
     bin_sequences = sequences_to_bin(sequences, no_symbols=number_of_symbols, delimiter=delimiter)
@@ -35,10 +36,10 @@ def crate_files(number_of_symbols: int, sequence_length: int, number_of_sequence
         context_file_name = f"{file_name}_context_{context_length}.txt"
         context_file_name_bin = f"{file_name}_context_{context_length}_bin.txt"
 
-        context_array = np.empty([number_of_sequences, context_length], dtype=int)
+        context_array = np.empty_like(sequences)
 
         for i in range(len(sequences)):
-            context_array[i] = SSAKG.context_from_sequence(context_length, sequences[i])
+            context_array[i] = context_from_sequence_zeros_filed(context_length, sequences[i])
 
         np.savetxt(context_file_name, np.array(context_array), fmt="%s")
         bin_sequences = sequences_to_bin(context_array, no_symbols=number_of_symbols, delimiter=delimiter)
@@ -47,11 +48,11 @@ def crate_files(number_of_symbols: int, sequence_length: int, number_of_sequence
 
 
 if __name__ == "__main__":
-    #Wszystkie liczby bitowe posiadają długość 10
+    # Wszystkie liczby bitowe posiadają długość 10
     # Tabela 8
     crate_files(number_of_symbols=615, sequence_length=15, number_of_sequences=1000, context_list=[3],
                 unique_elements=True,
-                base_name=f"table8_{np.random.randint(10000)}",delimiter=",")
+                base_name=f"table8_{np.random.randint(10000)}", delimiter=",")
 
     # crate_files(number_of_symbols=945, sequence_length=15, number_of_sequences=100_000, context_list=[3, 4, 5, 6, 7, 8],
     #             unique_elements=True,

@@ -35,3 +35,11 @@ def binary_string_to_sequence(binary_representation: str, no_symbols=1000) -> li
         binary_representation = binary_representation[max_min_length:]
 
     return decimal_sequence
+
+
+def context_from_sequence_zeros_filed(context_length: int, sequence: np.ndarray) -> np.ndarray:
+    context_array = np.zeros_like(sequence)
+    indexes = np.random.choice(len(sequence), size=context_length, replace=False)
+
+    context_array[indexes] = sequence[indexes]
+    return context_array
