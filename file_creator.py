@@ -16,7 +16,7 @@ def decode_file(filename: str):
 
 def crate_files(number_of_symbols: int, sequence_length: int, number_of_sequences: int, context_list: list[int],
                 unique_elements=True,
-                base_name="sequences", delimiter=","):
+                base_name="sequences", delimiter=None):
     file_name = f"{base_name}_no_symbols_{number_of_symbols}_no_sequences_{number_of_sequences}_length_{sequence_length}"
     file_name_bin = f"{file_name}_bin"
 
@@ -40,36 +40,37 @@ def crate_files(number_of_symbols: int, sequence_length: int, number_of_sequence
         for i in range(len(sequences)):
             context_array[i] = SSAKG.context_from_sequence(context_length, sequences[i])
 
-        np.savetxt(context_file_name, np.array(bin_sequences), fmt="%s")
+        np.savetxt(context_file_name, np.array(context_array), fmt="%s")
         bin_sequences = sequences_to_bin(context_array, no_symbols=number_of_symbols, delimiter=delimiter)
 
         np.savetxt(context_file_name_bin, np.array(bin_sequences), fmt="%s")
 
 
 if __name__ == "__main__":
+    #Wszystkie liczby bitowe posiadają długość 10
     # Tabela 8
-    crate_files(number_of_symbols=615, sequence_length=15, number_of_sequences=100_000, context_list=[3, 4, 5, 6, 7, 8],
+    crate_files(number_of_symbols=615, sequence_length=15, number_of_sequences=1000, context_list=[3],
                 unique_elements=True,
-                base_name=f"table8_{np.random.randint(10000)}")
+                base_name=f"table8_{np.random.randint(10000)}",delimiter=",")
 
-    crate_files(number_of_symbols=945, sequence_length=15, number_of_sequences=100_000, context_list=[3, 4, 5, 6, 7, 8],
-                unique_elements=True,
-                base_name=f"table8_{np.random.randint(10000)}")
-
-    crate_files(number_of_symbols=2483, sequence_length=15, number_of_sequences=100_000, context_list=[3, 4, 5, 6, 7, 8],
-                unique_elements=True,
-                base_name=f"table8_{np.random.randint(10000)}")
-
-    # Tabela 2
-    # to jest ten największy plik najątawiej podzielić go na mniejsze w pętli
-    crate_files(number_of_symbols=2000, sequence_length=15, number_of_sequences=13_000,
-                context_list=[6],
-                unique_elements=True,
-                base_name=f"table2_{np.random.randint(10000)}")
-
-    # Tabela 3
-
-    crate_files(number_of_symbols=615, sequence_length=15, number_of_sequences=1000,
-                context_list=[6],
-                unique_elements=True,
-                base_name=f"table3_{np.random.randint(10000)}")
+    # crate_files(number_of_symbols=945, sequence_length=15, number_of_sequences=100_000, context_list=[3, 4, 5, 6, 7, 8],
+    #             unique_elements=True,
+    #             base_name=f"table8_{np.random.randint(10000)}")
+    #
+    # crate_files(number_of_symbols=2483, sequence_length=15, number_of_sequences=100_000, context_list=[3, 4, 5, 6, 7, 8],
+    #             unique_elements=True,
+    #             base_name=f"table8_{np.random.randint(10000)}")
+    #
+    # # Tabela 2
+    # # to jest ten największy plik najątawiej podzielić go na mniejsze w pętli
+    # crate_files(number_of_symbols=2000, sequence_length=15, number_of_sequences=13_000,
+    #             context_list=[6],
+    #             unique_elements=True,
+    #             base_name=f"table2_{np.random.randint(10000)}")
+    #
+    # # Tabela 3
+    #
+    # crate_files(number_of_symbols=615, sequence_length=15, number_of_sequences=1000,
+    #             context_list=[6],
+    #             unique_elements=True,
+    #             base_name=f"table3_{np.random.randint(10000)}")

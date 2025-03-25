@@ -1,8 +1,10 @@
 import numpy as np
 
 
-def sequence_to_bin(sequence: np.ndarray, no_symbols: int, delimiter=None) -> str:
+def sequence_to_bin(sequence: np.ndarray, no_symbols: int) -> str:
     max_min_length = round(np.log2(no_symbols))
+    max_min_length = 10
+
     binary_representation = ""
     for symbol in sequence:
         bin_symbol = bin(symbol)[2:].zfill(max_min_length)
@@ -14,7 +16,7 @@ def sequence_to_bin(sequence: np.ndarray, no_symbols: int, delimiter=None) -> st
 def sequences_to_bin(sequences: np.ndarray, no_symbols: int, delimiter=None) -> list[str]:
     bin_sequences = []
     for sequence in sequences:
-        bin_line = sequence_to_bin(sequence, no_symbols, delimiter)
+        bin_line = sequence_to_bin(sequence, no_symbols)
         if delimiter is not None:
             bin_line = f"{delimiter}".join(bin_line)
         bin_sequences.append(bin_line)
