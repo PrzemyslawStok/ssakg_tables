@@ -28,7 +28,7 @@ def crate_files(number_of_symbols: int, sequence_length: int, number_of_sequence
     sequences += 1
 
     np.savetxt(file_name + ".txt", sequences, fmt="%d")
-    bin_sequences = sequences_to_bin(sequences, no_symbols=number_of_symbols, delimiter=delimiter)
+    bin_sequences = sequences_to_bin(sequences, max_symbol=number_of_symbols, delimiter=delimiter)
 
     np.savetxt(file_name_bin + ".txt", np.array(bin_sequences), fmt="%s")
 
@@ -42,7 +42,7 @@ def crate_files(number_of_symbols: int, sequence_length: int, number_of_sequence
             context_array[i] = context_from_sequence_zeros_filed(context_length, sequences[i])
 
         np.savetxt(context_file_name, np.array(context_array), fmt="%s")
-        bin_sequences = sequences_to_bin(context_array, no_symbols=number_of_symbols, delimiter=delimiter)
+        bin_sequences = sequences_to_bin(context_array, max_symbol=number_of_symbols + 1, delimiter=delimiter)
 
         np.savetxt(context_file_name_bin, np.array(bin_sequences), fmt="%s")
 
